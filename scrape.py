@@ -26,7 +26,7 @@ def get_jobs_from_remoteok(keyword,location=""):
     jobs = []
 
     try:
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 30).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'tr.job'))
         )
 

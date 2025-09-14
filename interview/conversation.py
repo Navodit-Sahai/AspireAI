@@ -3,13 +3,13 @@ from langchain_groq import ChatGroq
 from dotenv import load_dotenv
 
 load_dotenv()
-llm = ChatGroq(model_name="llama3-70b-8192")
+llm = ChatGroq(model_name="llama-3.3-70b-versatile")
 
 def take_interview(post: str, job_description: str, resume_text: str, vision_context: str):
     template = """
     You are a highly experienced and skilled **Senior Software Developer** at a top-tier tech company. 
     Imagine that you are conducting a **live video interview** with the candidate. 
-    You receive continuous camera observations about the candidate’s behavior, body language, and focus. 
+    You receive continuous camera observations about the candidate's behavior, body language, and focus. 
     Use this information to guide your questions and feedback naturally.
 
     Vision/Camera Observations:
@@ -32,9 +32,9 @@ def take_interview(post: str, job_description: str, resume_text: str, vision_con
     - Greet the candidate as if you are seeing them on camera
     - Take into account the live vision observations while speaking (e.g., if they look nervous, reassure them; if confident, challenge deeper)
     - Ask relevant and thoughtful interview questions, one at a time
-    - Pause and wait for the candidate’s spoken response
+    - Pause and wait for the candidate's spoken response
     - Adapt follow-up questions based on their answers and camera observations
-    - Evaluate the candidate’s technical knowledge, problem-solving skills, and communication style
+    - Evaluate the candidate's technical knowledge, problem-solving skills, and communication style
     - Provide constructive feedback at the end (strengths and weaknesses)
 
     The candidate's resume is provided below for reference:
@@ -45,13 +45,14 @@ def take_interview(post: str, job_description: str, resume_text: str, vision_con
 
     prompt = PromptTemplate(
         template=template,
-        input_variables=["post", "job_description", "resume"]
+        input_variables=["post", "job_description", "resume", "vision_context"]
     )
 
     final_prompt = prompt.format(
         post=post,
         job_description=job_description,
-        resume=resume_text
+        resume=resume_text,
+        vision_context=vision_context
     )
 
     response = llm.invoke(final_prompt)
@@ -64,6 +65,3 @@ def sanitize_content(content):
     if not isinstance(content, str):
         content = str(content)
     return content
-
-
-

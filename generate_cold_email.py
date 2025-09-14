@@ -8,7 +8,7 @@ from langchain_community.document_loaders import WebBaseLoader
 
 load_dotenv()
 
-llm = ChatGroq(model='llama3-70b-8192', max_retries=2)
+llm = ChatGroq(model_name="llama-3.3-70b-versatile")
 parser = JsonOutputParser()
 
 @st.cache_resource
